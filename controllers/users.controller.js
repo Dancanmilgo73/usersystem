@@ -95,6 +95,21 @@ const addProject = async(req,res) => {
     }
 }
 
-module.exports ={loginUser, registerUser, addProject}
+const removeProject = async(req,res) => {
+  try {
+  const {project,email} =req.body;
+  console.log(email);
+  // console.log(project);
+   let sql = `UPDATE users SET project = NULL WHERE email = '${email}'`;
+   const pool = await mssql.connect(sqlConfig);
+   const result = await pool.request().query(sql)
+   console.log(result)
+  } catch (error) {
+      res.status(500).send();
+  }
+}
+
+
+module.exports ={loginUser, registerUser, addProject, removeProject}
 
 
